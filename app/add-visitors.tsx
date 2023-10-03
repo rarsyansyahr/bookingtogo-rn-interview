@@ -140,9 +140,9 @@ const styling = (insets: EdgeInsets) => StyleSheet.create({
 
     visitorInput: {flex: 1, marginStart: 10, marginEnd: 14},
 
-    button: {marginHorizontal: 20,  marginBottom: insets.bottom + 20},
+    button: {marginHorizontal: 20,  marginBottom: insets.bottom},
 
-    container: {flex: 1, margin: 16},
+    container: {flex: 1, paddingHorizontal: 16, paddingTop: 16, marginBottom: 16},
 
     visitorTitle: {fontWeight: "bold", marginBottom: 12},
 

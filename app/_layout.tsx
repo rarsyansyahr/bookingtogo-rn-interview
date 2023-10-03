@@ -3,6 +3,8 @@ import {FC, useEffect} from "react";
 import { PaperProvider, MD3LightTheme as DefaultTheme } from 'react-native-paper';
 import { store } from '../stores'
 import { Provider as StoreProvider } from 'react-redux'
+import dayjs from "dayjs"
+import id from "dayjs/locale/id"
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,6 +21,8 @@ const theme = {
 
 const Layout: FC = () => {
     useEffect(() => {
+        dayjs.locale(id)
+
         SplashScreen.hideAsync()
     }, []);
 

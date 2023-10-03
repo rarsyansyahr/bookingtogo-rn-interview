@@ -1,11 +1,15 @@
-import {FC, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {Link} from "expo-router";
 import {useTheme, Divider, RadioButton} from "react-native-paper";
 import {AppBar, Card, Text} from "../components";
 import {View, Image, TextStyle, Pressable, FlatList, ListRenderItem, ScrollView} from "react-native";
-import {StyleSheet} from "react-native"
+import {StyleSheet, ActivityIndicator} from "react-native"
 import Icon from "@expo/vector-icons/MaterialCommunityIcons"
 import {Visitor} from "../models";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../stores";
+import {fetchOrderDetail} from "../stores/OrderSlice";
+import dayjs from "dayjs";
 
 const HotelCheck:FC<{status: "In" | "Out"; value: string}> = (props) => <View style={styles.hotelCheck}>
     <Text style={styles.boldText}>{`Check-${props.status}`}</Text>
@@ -24,6 +28,17 @@ const VisitorsCard:FC<{items: Array<Visitor>}> = (props) => <View style={styles.
 </View>
 
 const Page:FC = () => {
+    // * Store
+    const dispatch = useDispatch()
+    const {error, loading, orderDetail, visitors} = useSelector((state: RootState) => state.order)
+    const chosenHotel = orderDetail?.chosenHotel
+    const detail = chosenHotel?.detail
+    const params = chosenHotel?.params
+    const prices = chosenHotel?.prices
+
+    const checkIn = dayjs(params?.checkIn).format("DD MMMM YYYY")
+    const checkOut = dayjs(params?.checkOut).format("DD MMMM YYYY")
+
     // * Theme
     const theme = useTheme()
 
@@ -33,6 +48,13 @@ const Page:FC = () => {
     // * Actions
     const onValueChange = (value: any) => setOrderFor(value)
 
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(fetchOrderDetail())
+    }, []);
+
+    if(loading) return <View style={styles.center}><ActivityIndicator color={theme.colors.primary} size="large" /></View>
+
     return <>
         <AppBar title="Payment Details" />
 
@@ -41,19 +63,22 @@ const Page:FC = () => {
             <View style={styles.padding}>
                 <Text style={styles.boldText}>Detail Pesanan</Text>
                 <Card style={[styles.card, styles.flexRow]}>
-                    <Image width={60} height={60} source={{uri: "https://hotelimages.sunhotels.net/HotelInfo/hotelImage.aspx?id=11463973"}} style={styles.image} />
+                    <Image width={60} height={60} source={{uri: detail?.images[0].thumbnail}} style={styles.image} />
                     <View>
-                        <Text color={theme.colors.primary} style={styles.cardTitle}>Novotel Tangerang</Text>
+                        <Text color={theme.colors.primary} style={styles.cardTitle}>{detail?.name}</Text>
                         <Text color="#a0a0a0">asdasdoas</Text>
                         <Text color="#a0a0a0">asdasdoas</Text>
                     </View>
                 </Card>
 
-                <HotelCheck status="In" value="01 November 2023" />
+                <HotelCheck status="In" value={checkIn} />
 
-                <HotelCheck status="Out" value="04 November 2023" />
+                <HotelCheck status="Out" value={checkOut} />
 
-                <View style={styles.refund}><Icon name="cash-refund" color={theme.colors.tertiary} size={20} /><Text style={styles.refundText} color={theme.colors.tertiary}>Dapat direfund jika dibatalkan</Text></View>
+                { prices?.isRefundable && <View style={styles.refund}>
+                    <Icon name="cash-refund" color={theme.colors.tertiary} size={20}/>
+                    <Text style={styles.refundText} color={theme.colors.tertiary}>Dapat direfund jika dibatalkan</Text>
+                </View>}
             </View>
             <Divider />
 
@@ -80,7 +105,7 @@ const Page:FC = () => {
                 </RadioButton.Group>
 
                 { orderFor === "other" &&  <>
-                    <VisitorsCard items={[{title: "Mr", name: "Rizky"}, {title: "Ms", name: "Fauziyah"}]}/>
+                    <VisitorsCard items={visitors}/>
                     <Link href="/add-visitors" style={styles.changeVisitorsTextLink}>
                         <Text color={theme.colors.primary} style={styles.changeVisitorsText} underline>Ubah Data Tamu</Text>
                     </Link>
@@ -140,7 +165,9 @@ const styles = StyleSheet.create({
 
     visitorTitle: {marginBottom: 14},
 
-    root: {backgroundColor: "#ffffff"}
+    root: {backgroundColor: "#ffffff"},
+
+    center: {flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#ffffff"}
 })
 
 export default Page

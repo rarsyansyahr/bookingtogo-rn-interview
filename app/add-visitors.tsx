@@ -2,7 +2,7 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
 import { FlatList, ListRenderItem, Platform, StyleSheet, View } from 'react-native';
-import { Button, TextInput, useTheme } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import SelectDropdown from 'react-native-select-dropdown';
 
@@ -65,7 +65,7 @@ const AddVisitorsPage: FC = () => {
         control={control}
       />
       <Controller
-        render={({ field: { onChange, onBlur, value }, fieldState: { error, isTouched } }) => (
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <TextInput
             mode="outlined"
             style={styles.visitorInput}

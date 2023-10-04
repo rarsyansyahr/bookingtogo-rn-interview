@@ -73,7 +73,7 @@ export const OrderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchOrderDetail.pending, (state, { payload }) => {
+    builder.addCase(fetchOrderDetail.pending, (state) => {
       state.loading = true;
     });
 

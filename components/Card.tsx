@@ -12,5 +12,5 @@ export const Card: FC<CardProps> = (props) => {
 }
 
 const styles = StyleSheet.create({
-    container: {backgroundColor: "white", padding: 8, borderColor: "gray", borderWidth: 1, borderRadius: 10}
+    container: {backgroundColor: "white", padding: 8, borderColor: "#F0F0F0", borderWidth: 1, borderRadius: 10}
 })

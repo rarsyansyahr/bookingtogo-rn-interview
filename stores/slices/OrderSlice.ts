@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {OrderDetail, Visitor} from "../models";
+import {OrderDetail, Visitor} from "../../models";
 
 export interface OrderState {
     visitors: Array<Visitor>
@@ -12,7 +12,7 @@ export interface OrderState {
 const initialState: OrderState = {
     visitors: [],
     orderDetail: undefined,
-    loading: false,
+    loading: true,
     error: undefined
 }
 

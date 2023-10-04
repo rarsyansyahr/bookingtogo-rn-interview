@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../stores";
-import {fetchOrderDetail} from "../stores/OrderSlice";
+import {fetchOrderDetail} from "../stores/slices/OrderSlice";
 
 export const useOrderDetail = () => {
     const dispatch = useDispatch()

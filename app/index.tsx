@@ -1,8 +1,8 @@
-import {FC, useState} from "react";
+import {FC, memo, useMemo, useState} from "react";
 import {Link} from "expo-router";
 import {Badge, Divider, RadioButton, useTheme} from "react-native-paper";
 import {AppBar, Card, Text} from "../components";
-import {ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, TextStyle, View} from "react-native";
+import {ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, TextStyle, View, ViewStyle} from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons"
 import {Visitor} from "../models";
 import dayjs from "dayjs";
@@ -24,6 +24,7 @@ const Page:FC = () => {
     // * Theme
     const theme = useTheme()
     const primary = theme.colors.primary
+    const gray = "#CACACA"
 
     // * Styles
     const insets = useSafeAreaInsets()
@@ -36,26 +37,31 @@ const Page:FC = () => {
     const onValueChange = (value: any) => setOrderFor(value)
 
     // * Components
-    const Header = () => <View style={styles.header}>
-        <View style={styles.headerListItem}>
-            <Badge size={24} style={styles.badge}>1</Badge>
-            <Text style={styles.boldText}>Detail Pesanan</Text>
+    const HeaderListItem:FC<{badge: number; label: string; active?: boolean}> = memo((props) =>{
+        const headerListItemStyle: Array<ViewStyle> = [styles.headerListItem]
+
+        if(!props?.active) headerListItemStyle.push(styles.inactiveHeaderListItem)
+
+        return <View style={headerListItemStyle}>
+            <Badge size={24} style={styles.badge}>{props.badge}</Badge>
+            <Text variant="titleMedium">{props.label}</Text>
         </View>
+    })
+
+    const Header =() => <View style={styles.header}>
+        <HeaderListItem badge={1} label="Detail Pesanan" active />
         <Icon name="minus" style={styles.minusIcon} />
-        <View style={[styles.headerListItem, styles.inactiveHeaderListItem]}>
-            <Badge size={24} style={styles.badge}>2</Badge>
-            <Text style={styles.boldText}>Pembayaran</Text>
-        </View>
+        <HeaderListItem badge={2} label="Pembayaran" />
     </View>
 
     const OrderDetailCard = () => <View style={styles.padding}>
-        <Text style={styles.boldText}>Detail Pesanan</Text>
+        <Text variant="titleMedium">Detail Pesanan</Text>
         <Card style={[styles.card, styles.flexRow]}>
             <Image width={60} height={60} source={{uri: detail?.images[0].thumbnail}} style={styles.image} />
             <View>
                 <Text color={primary} style={styles.cardTitle}>{detail?.name}</Text>
-                <Text color="#a0a0a0">asdasdoas</Text>
-                <Text color="#a0a0a0">asdasdoas</Text>
+                <Text color={gray}>asdasdoas</Text>
+                <Text color={gray}>asdasdoas</Text>
             </View>
         </Card>
 
@@ -65,55 +71,58 @@ const Page:FC = () => {
 
         { prices?.isRefundable && <View style={styles.refund}>
             <Icon name="cash-refund" color={theme.colors.tertiary} size={20}/>
-            <Text style={styles.refundText} color={theme.colors.tertiary}>Dapat direfund jika dibatalkan</Text>
+            <Text variant="bodyMedium" style={styles.refundText} color={theme.colors.tertiary}>Dapat direfund jika dibatalkan</Text>
         </View>}
     </View>
 
     const CustomerCard = () => <View style={styles.padding}>
-        <Text style={styles.boldText}>Detail Pemesan</Text>
+        <Text variant="titleMedium">Detail Pemesan</Text>
         <Card style={styles.customerCard}>
             <View>
-                <Text style={styles.customerCardTitle}>Tn. Andreass</Text>
-                <Text>andreas@gmail.com</Text>
-                <Text>+62 881928 912891 2</Text>
+                <Text variant="titleMedium" style={styles.customerCardTitle}>Tn. Andreass</Text>
+                <Text color={gray} variant="bodyMedium">andreas@gmail.com</Text>
+                <Text color={gray} variant="bodyMedium">+62 881928 912891 2</Text>
             </View>
-            <Text underline color={primary}>Ubah</Text>
+            <Text underline variant="bodyMedium" color={primary}>Ubah</Text>
         </Card>
 
         <RadioButton.Group onValueChange={onValueChange} value={orderFor}>
             <Pressable style={styles.orderForOption} onPress={() => setOrderFor("me")}>
                 <RadioButton value="me" />
-                <Text>Saya memesan untuk sendiri</Text>
+                <Text variant="titleSmall">Saya memesan untuk sendiri</Text>
             </Pressable>
             <Pressable style={styles.orderForOption} onPress={() => setOrderFor("other")}>
                 <RadioButton value="other" />
-                <Text>Saya memesan untuk orang lain</Text>
+                <Text variant="titleSmall">Saya memesan untuk orang lain</Text>
             </Pressable>
         </RadioButton.Group>
 
         { orderFor === "other" &&  <>
             <VisitorsCard items={visitors}/>
-            <Link href="/add-visitors" style={styles.changeVisitorsTextLink}>
-                <Text color={primary} style={styles.changeVisitorsText} underline>Ubah Data Tamu</Text>
-            </Link>
+
+            <View style={styles.changeVisitorsTextLink}>
+                <Link href="/add-visitors">
+                    <Text color={primary} variant="bodyMedium" underline>Ubah Data Tamu</Text>
+                </Link>
+            </View>
         </>}
     </View>
 
-    const HotelCheck:FC<{status: "In" | "Out"; value: string}> = (props) => <View style={styles.hotelCheck}>
-        <Text style={styles.boldText}>{`Check-${props.status}`}</Text>
-        <Text color="#a0a0a0">{props.value}</Text>
-    </View>
+    const HotelCheck:FC<{status: "In" | "Out"; value: string}> = memo((props) => <View style={styles.hotelCheck}>
+        <Text variant="titleMedium">{`Check-${props.status}`}</Text>
+        <Text color={gray} variant="bodyMedium">{props.value}</Text>
+    </View>)
 
 
-    const VisitorsCard:FC<{items: Array<Visitor>}> = (props) => <View style={styles.visitorsCard}>
-        <Text style={styles.visitorTitle}>Data Tamu</Text>
+    const VisitorsCard:FC<{items: Array<Visitor>}> = memo((props) => <View style={styles.visitorsCard}>
+        <Text variant="titleMedium" style={styles.visitorTitle}>Data Tamu</Text>
 
         {props.items.map((item, index) => <Card style={styles.visitorCard} key={index}>
             <Icon name="face-man-profile" size={20}/>
-            <Text style={styles.visitorText}>{(item.title === "Mr" ? "Tn" : "Ny") + ". " + item.name}</Text>
+            <Text variant="titleSmall" style={styles.visitorText}>{(item.title === "Mr" ? "Tn" : "Ny") + ". " + item.name}</Text>
         </Card>)
         }
-    </View>
+    </View>)
 
     if(loading) return <View style={styles.center}><ActivityIndicator color={primary} size="large" /></View>
 
@@ -131,12 +140,10 @@ const Page:FC = () => {
     </>
 }
 
-const boldText = {fontWeight: "bold"} as TextStyle
-
 const styling = (props: {colors: MD3Colors, insets: EdgeInsets}) => StyleSheet.create({
     card: {marginVertical: 14},
 
-    cardTitle: {...boldText, marginBottom: 4},
+    cardTitle: { marginBottom: 4},
 
     image: {borderRadius: 10, marginEnd: 8},
 
@@ -145,8 +152,6 @@ const styling = (props: {colors: MD3Colors, insets: EdgeInsets}) => StyleSheet.c
     justifyBetween: {justifyContent: "space-between"},
 
     padding: {padding: 16},
-
-    boldText,
 
     hotelCheck: { flexDirection: "row", justifyContent: "space-between", marginBottom: 10 },
 
@@ -161,11 +166,9 @@ const styling = (props: {colors: MD3Colors, insets: EdgeInsets}) => StyleSheet.c
         alignItems: "center"
     },
 
-    customerCardTitle: {...boldText, marginBottom: 2},
+    customerCardTitle: {marginBottom: 2},
 
-    changeVisitorsText: {textAlign: "right"},
-
-    changeVisitorsTextLink: {marginTop: 12},
+    changeVisitorsTextLink: {marginTop: 12, alignItems: "flex-end"},
 
     orderForOption: { flexDirection: "row", alignItems: "center" },
 
@@ -181,7 +184,7 @@ const styling = (props: {colors: MD3Colors, insets: EdgeInsets}) => StyleSheet.c
 
     center: {flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#ffffff"},
 
-    header: { paddingVertical: 16, paddingHorizontal: 12, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" },
+    header: { padding: 14, flexDirection: "row", alignItems: "center", justifyContent: "flex-end" },
 
     badge: { backgroundColor: props.colors.primary, marginEnd: 4, fontWeight: "bold" },
 
@@ -189,7 +192,7 @@ const styling = (props: {colors: MD3Colors, insets: EdgeInsets}) => StyleSheet.c
 
     inactiveHeaderListItem: { opacity: 0.4 },
 
-    minusIcon: { marginHorizontal: 8 }
+    minusIcon: { marginHorizontal: 8 },
 })
 
 export default Page

@@ -1,4 +1,4 @@
 export interface Visitor {
-    title: "Mr" | "Ms";
-    name: string
+  title: 'Mr' | 'Ms';
+  name: string;
 }

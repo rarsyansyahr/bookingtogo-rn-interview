@@ -1,5 +1,5 @@
-import {Platform} from "react-native";
+import { Platform } from 'react-native';
 
 export const Constants = {
-    isIos: Platform.OS === "ios"
-}
+  isIos: Platform.OS === 'ios',
+};

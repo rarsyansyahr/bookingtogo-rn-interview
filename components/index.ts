@@ -1,3 +1,3 @@
-export * from "./AppBar"
-export * from "./Text"
-export * from "./Card"
+export * from './AppBar';
+export * from './Text';
+export * from './Card';

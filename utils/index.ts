@@ -1,3 +1,3 @@
-export * from "./Constants"
-export * from "./Colors"
-export * from "./FontConfig"
+export * from './Constants';
+export * from './Colors';
+export * from './FontConfig';

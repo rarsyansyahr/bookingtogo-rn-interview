@@ -1,3 +1,3 @@
-export * from "./Header"
-export * from "./OrderDetailCard"
-export * from "./CustomerCard"
+export * from './Header';
+export * from './OrderDetailCard';
+export * from './CustomerCard';

@@ -1,12 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
-import OrderSlice from "./slices/OrderSlice"
+import { configureStore } from '@reduxjs/toolkit';
+
+import OrderSlice from './slices/OrderSlice';
 
 export const store = configureStore({
-    reducer: {
-        order: OrderSlice
-    },
-})
+  reducer: {
+    order: OrderSlice,
+  },
+});
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;

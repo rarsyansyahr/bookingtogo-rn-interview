@@ -1,43 +1,57 @@
-import {FC} from "react";
-import {Divider} from "react-native-paper";
-import {AppBar} from "../components";
-import {ActivityIndicator, ScrollView, StyleSheet, View} from "react-native";
-import {useOrderDetail} from "../hooks";
-import {EdgeInsets, useSafeAreaInsets} from "react-native-safe-area-context";
-import {Colors} from "../utils";
-import {CustomerCard, Header, OrderDetailCard} from "../components/pages/home";
+import { FC } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { Divider } from 'react-native-paper';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const Page:FC = () => {
-    // * Store
-    const {error, loading, orderDetail, visitors} = useOrderDetail()
+import { AppBar } from '../components';
+import { CustomerCard, Header, OrderDetailCard } from '../components/pages/home';
+import { useOrderDetail } from '../hooks';
+import { Colors } from '../utils';
 
-    // * Styles
-    const insets = useSafeAreaInsets()
-    const styles = styling({insets})
+const Page: FC = () => {
+  // * Store
+  const { loading, orderDetail, visitors } = useOrderDetail();
 
-    if(loading) return <View style={styles.center}><ActivityIndicator color={Colors.primary} size="large" /></View>
+  // * Styles
+  const insets = useSafeAreaInsets();
+  const styles = styling({ insets });
 
-    return <>
-        <AppBar title="Payment Details" />
+  if (loading)
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator color={Colors.primary} size="large" />
+      </View>
+    );
 
-        <Header />
+  return (
+    <>
+      <AppBar title="Payment Details" />
 
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.root}>
-            <Divider/>
-            <OrderDetailCard orderDetail={orderDetail} />
-            <Divider />
-            <CustomerCard visitors={visitors} />
-            <Divider style={styles.lastDivider}/>
-        </ScrollView>
+      <Header />
+
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.root}>
+        <Divider />
+        <OrderDetailCard orderDetail={orderDetail} />
+        <Divider />
+        <CustomerCard visitors={visitors} />
+        <Divider style={styles.lastDivider} />
+      </ScrollView>
     </>
-}
+  );
+};
 
-const styling = (props: {insets: EdgeInsets}) => StyleSheet.create({
-    root: {backgroundColor: Colors.white},
+const styling = (props: { insets: EdgeInsets }) =>
+  StyleSheet.create({
+    root: { backgroundColor: Colors.white },
 
-    lastDivider: {marginBottom:props.insets.bottom},
+    lastDivider: { marginBottom: props.insets.bottom },
 
-    center: {flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.white},
-})
+    center: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: Colors.white,
+    },
+  });
 
-export default Page
+export default Page;

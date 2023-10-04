@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import {MD3Colors} from "react-native-paper/lib/typescript/types";
 import {useOrderDetail} from "../hooks";
 import {EdgeInsets, useSafeAreaInsets} from "react-native-safe-area-context";
+import {Colors} from "../utils";
 
 const Page:FC = () => {
     // * Store
@@ -24,7 +25,6 @@ const Page:FC = () => {
     // * Theme
     const theme = useTheme()
     const primary = theme.colors.primary
-    const gray = "#CACACA"
 
     // * Styles
     const insets = useSafeAreaInsets()
@@ -60,8 +60,8 @@ const Page:FC = () => {
             <Image width={60} height={60} source={{uri: detail?.images[0].thumbnail}} style={styles.image} />
             <View>
                 <Text color={primary} style={styles.cardTitle}>{detail?.name}</Text>
-                <Text color={gray}>asdasdoas</Text>
-                <Text color={gray}>asdasdoas</Text>
+                <Text color={Colors.gray}>asdasdoas</Text>
+                <Text color={Colors.gray}>asdasdoas</Text>
             </View>
         </Card>
 
@@ -80,8 +80,8 @@ const Page:FC = () => {
         <Card style={styles.customerCard}>
             <View>
                 <Text variant="titleMedium" style={styles.customerCardTitle}>Tn. Andreass</Text>
-                <Text color={gray} variant="bodyMedium">andreas@gmail.com</Text>
-                <Text color={gray} variant="bodyMedium">+62 881928 912891 2</Text>
+                <Text color={Colors.gray} variant="bodyMedium">andreas@gmail.com</Text>
+                <Text color={Colors.gray} variant="bodyMedium">+62 881928 912891 2</Text>
             </View>
             <Text underline variant="bodyMedium" color={primary}>Ubah</Text>
         </Card>
@@ -110,7 +110,7 @@ const Page:FC = () => {
 
     const HotelCheck:FC<{status: "In" | "Out"; value: string}> = memo((props) => <View style={styles.hotelCheck}>
         <Text variant="titleMedium">{`Check-${props.status}`}</Text>
-        <Text color={gray} variant="bodyMedium">{props.value}</Text>
+        <Text color={Colors.gray} variant="bodyMedium">{props.value}</Text>
     </View>)
 
 

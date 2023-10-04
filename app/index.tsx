@@ -20,19 +20,22 @@ const Page:FC = () => {
     return <>
         <AppBar title="Payment Details" />
 
+        <Header />
+
         <ScrollView showsVerticalScrollIndicator={false} style={styles.root}>
-            <Header />
             <Divider/>
             <OrderDetailCard orderDetail={orderDetail} />
             <Divider />
             <CustomerCard visitors={visitors} />
-            <Divider/>
+            <Divider style={styles.lastDivider}/>
         </ScrollView>
     </>
 }
 
 const styling = (props: {insets: EdgeInsets}) => StyleSheet.create({
-    root: {backgroundColor: Colors.white, paddingBottom: props.insets.bottom},
+    root: {backgroundColor: Colors.white},
+
+    lastDivider: {marginBottom:props.insets.bottom},
 
     center: {flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.white},
 })

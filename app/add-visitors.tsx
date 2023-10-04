@@ -117,11 +117,11 @@ const styling = (insets: EdgeInsets) => StyleSheet.create({
         borderRadius: 12,
         borderWidth: 1,
         borderColor: '#CACACA',
-        width: 80,
-        height: 56
+        width: 84,
+        height: 56,
     },
 
-    dropdownButtonText: { fontFamily, fontSize: 16 },
+    dropdownButtonText: { fontFamily, fontSize: 16, margin: 0 },
 
     dropdown: {borderRadius: 12, fontFamily}
 })

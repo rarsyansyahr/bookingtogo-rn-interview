@@ -32,6 +32,7 @@ export const fetchOrderDetail = createAsyncThunk<OrderDetail>("order/fetchOrderD
     const detail = chosenHotel?.chosen_hotel_detail
     const params = chosenHotel?.chosen_hotel_params
     const prices = chosenHotel?.chosen_hotel_prices
+    const room = chosenHotel?.chosen_hotel_room
 
     return {
         chosenHotel: {
@@ -39,9 +40,14 @@ export const fetchOrderDetail = createAsyncThunk<OrderDetail>("order/fetchOrderD
                 name: detail?.hotel_name,
                 images: detail?.images
             },
+            room: {
+                name: room?.room_name
+            },
             params: {
                 checkIn: params?.check_in,
-                checkOut: params?.check_out
+                checkOut: params?.check_out,
+                guestAdult: params?.guest_adult,
+                totalRoom: params?.total_room
             },
             prices: {
                 isRefundable: prices?.is_refundable

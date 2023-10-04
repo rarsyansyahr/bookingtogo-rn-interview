@@ -18,18 +18,22 @@ export const OrderDetailCard: FC<{ orderDetail?: OrderDetail }> = (props) => {
     const detail = chosenHotel?.detail
     const params = chosenHotel?.params
     const prices = chosenHotel?.prices
+    const room = chosenHotel?.room
 
+    // * Data
     const checkIn = dayjs(params?.checkIn).format("DD MMMM YYYY")
     const checkOut = dayjs(params?.checkOut).format("DD MMMM YYYY")
+    const totalNight = dayjs(params?.checkOut).diff(params?.checkIn, "day")
+    const roomDetail = `${params?.totalRoom} Kamar • Quadpurble • ${params?.guestAdult} Tamu • ${totalNight} Malam`
 
     return <View style={styles.padding}>
         <Text variant="titleMedium">Detail Pesanan</Text>
         <Card style={[styles.card, styles.flexRow]}>
-            <Image width={60} height={60} source={{uri: detail?.images[0].thumbnail}} style={styles.image}/>
-            <View>
-                <Text color={Colors.primary} style={styles.cardTitle}>{detail?.name}</Text>
-                <Text color={Colors.gray}>asdasdoas</Text>
-                <Text color={Colors.gray}>asdasdoas</Text>
+            <Image width={50} height={50} source={{uri: detail?.images[0].thumbnail}} style={styles.image}/>
+            <View style={{flex: 1}}>
+                <Text color={Colors.primary} variant="titleSmall">{detail?.name}</Text>
+                <Text color={Colors.gray} numberOfLines={1} ellipsizeMode="tail" variant="bodySmall">{room?.name}</Text>
+                <Text color={Colors.gray} numberOfLines={1} ellipsizeMode="tail" variant="bodySmall">{roomDetail}</Text>
             </View>
         </Card>
 
@@ -47,8 +51,6 @@ export const OrderDetailCard: FC<{ orderDetail?: OrderDetail }> = (props) => {
 
 const styles = StyleSheet.create({
     card: {marginVertical: 14},
-
-    cardTitle: { marginBottom: 4},
 
     image: {borderRadius: 10, marginEnd: 8},
 

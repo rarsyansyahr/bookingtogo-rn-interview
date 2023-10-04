@@ -10,9 +10,14 @@ export interface OrderDetail {
             images: Array<Image>;
             name: string;
         };
+        room: {
+            name: string;
+        },
         params: {
             checkIn: string;
-            checkOut: string
+            checkOut: string;
+            totalRoom: number;
+            guestAdult: number;
         },
         prices: {
             isRefundable: boolean

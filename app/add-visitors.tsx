@@ -8,6 +8,7 @@ import {Visitor} from "../models";
 import {AppBar, Text} from "../components"
 import {Controller} from "react-hook-form";
 import {useAddVisitorForm} from "../hooks";
+import {Colors} from "../utils";
 
 const isIos = Platform.OS === "ios"
 const fontFamily = isIos ? "Poppins_400Regular" : "OpenSans_400Regular"
@@ -17,19 +18,17 @@ const AddVisitorsPage: FC = () => {
     const {onAddVisitor, onRemoveVisitor, control, handleSubmit, onSaveVisitors, fields} = useAddVisitorForm()
 
     // * Theme
-    const theme = useTheme()
     const insets = useSafeAreaInsets()
-    const gray = "#CACACA"
     const styles = styling(insets)
 
     // * Data
     const dropdownItems = ["Mr", "Ms"]
 
     // * Components
-    const ListHeader = <Text color={theme.colors.primary} style={styles.visitorTitle} variant="titleMedium">Data
+    const ListHeader = <Text color={Colors.primary} style={styles.visitorTitle} variant="titleMedium">Data
         Tamu</Text>
 
-    const ListFooter = <Text color={theme.colors.tertiary} variant="titleSmall" underline style={styles.footerListText}
+    const ListFooter = <Text color={Colors.tertiary} variant="titleSmall" underline style={styles.footerListText}
                              onPress={onAddVisitor}>+ Tambah Data Tamu</Text>
 
     const renderItem: ListRenderItem<Visitor & { id: string }> = ({item, index}) => (
@@ -60,7 +59,7 @@ const AddVisitorsPage: FC = () => {
                         value={value}
                         error={error !== undefined}
                         outlineStyle={{borderRadius: 12}}
-                        outlineColor={gray}
+                        outlineColor={Colors.gray}
                     />
                 }
                 name={`visitors.${index}.name`}
@@ -68,7 +67,7 @@ const AddVisitorsPage: FC = () => {
             />
             <Icon
                 name="trash-can-outline"
-                size={28} color={theme.colors.error}
+                size={28} color={Colors.error}
                 onPress={() => onRemoveVisitor(index)}/>
         </View>
     )
@@ -88,7 +87,7 @@ const AddVisitorsPage: FC = () => {
 
             <Button
                 mode="contained"
-                buttonColor={theme.colors.tertiary}
+                buttonColor={Colors.tertiary}
                 style={styles.button}
                 onPress={handleSubmit(onSaveVisitors)}>
                 Simpan

@@ -21,6 +21,7 @@ const theme = {
         ...DefaultTheme.colors,
         primary: Colors.primary,
         tertiary: Colors.tertiary,
+        error: Colors.error,
         background: Colors.background
     },
     fonts: configureFonts({

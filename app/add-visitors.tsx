@@ -128,7 +128,11 @@ const styling = (insets: EdgeInsets) =>
 
     visitorInput: { flex: 1, marginStart: 10, marginEnd: 14 },
 
-    button: { marginHorizontal: 20, marginBottom: insets.bottom, borderRadius: 10 },
+    button: {
+      marginHorizontal: 20,
+      marginBottom: insets.bottom + (insets.bottom > 0 ? 0 : 20),
+      borderRadius: 10,
+    },
 
     container: { flex: 1, paddingHorizontal: 16, paddingTop: 16, marginBottom: 16 },
 

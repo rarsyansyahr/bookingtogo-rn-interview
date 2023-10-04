@@ -14,7 +14,7 @@ const Page: FC = () => {
 
   // * Styles
   const insets = useSafeAreaInsets();
-  const styles = styling({ insets });
+  const styles = styling(insets);
 
   if (loading)
     return (
@@ -28,9 +28,9 @@ const Page: FC = () => {
       <AppBar title="Payment Details" />
 
       <Header />
+      <Divider />
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.root}>
-        <Divider />
         <OrderDetailCard orderDetail={orderDetail} />
         <Divider />
         <CustomerCard visitors={visitors} />
@@ -40,11 +40,11 @@ const Page: FC = () => {
   );
 };
 
-const styling = (props: { insets: EdgeInsets }) =>
+const styling = (insets: EdgeInsets) =>
   StyleSheet.create({
     root: { backgroundColor: Colors.white },
 
-    lastDivider: { marginBottom: props.insets.bottom },
+    lastDivider: { marginBottom: insets.bottom + (insets.bottom > 0 ? 0 : 20) },
 
     center: {
       flex: 1,

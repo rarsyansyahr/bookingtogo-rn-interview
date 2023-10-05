@@ -16,19 +16,29 @@
     ],
     "scheme": "com.bookingtogo-interview",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.arsyansyah.bookingtogointerview"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.arsyansyah.bookingtogointerview"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b9d13f2f-2f8d-4b0c-815a-90d589e71709"
+      }
+    }
   }
 }

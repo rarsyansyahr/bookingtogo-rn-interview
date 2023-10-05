@@ -34,7 +34,7 @@
     "zod": "^3.22.2"
   },
   "engines": {
-    "node": ">=16.20.2"
+    "node": ">=16.18.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
